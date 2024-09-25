@@ -3,7 +3,7 @@
  * Copyright (c) 2018, Microsoft Corporation (MIT License).
  */
 
-declare module 'node-pty' {
+declare module '@desirecore/node-pty' {
   /**
    * Forks a process as a pseudoterminal.
    * @param file The file to launch.
@@ -15,34 +15,34 @@ declare module 'node-pty' {
    * @see Parsing C++ Comamnd-Line Arguments https://msdn.microsoft.com/en-us/library/17w5ykft.aspx
    * @see GetCommandLine https://msdn.microsoft.com/en-us/library/windows/desktop/ms683156.aspx
    */
-  export function spawn(file: string, args: string[] | string, options: IPtyForkOptions | IWindowsPtyForkOptions): IPty;
+  export function spawn (file: string, args: string[] | string, options: IPtyForkOptions | IWindowsPtyForkOptions): IPty
 
   export interface IBasePtyForkOptions {
 
     /**
      * Name of the terminal to be set in environment ($TERM variable).
      */
-    name?: string;
+    name?: string
 
     /**
      * Number of intial cols of the pty.
      */
-    cols?: number;
+    cols?: number
 
     /**
      * Number of initial rows of the pty.
      */
-    rows?: number;
+    rows?: number
 
     /**
      * Working directory to be set for the child program.
      */
-    cwd?: string;
+    cwd?: string
 
     /**
      * Environment to be set for the child program.
      */
-    env?: { [key: string]: string | undefined };
+    env?: { [key: string]: string | undefined }
 
     /**
      * String encoding of the underlying pty.
@@ -50,7 +50,7 @@ declare module 'node-pty' {
      * If unset, incoming data will be delivered as raw bytes (Buffer type).
      * By default 'utf8' is assumed, to unset it explicitly set it to `null`.
      */
-    encoding?: string | null;
+    encoding?: string | null
 
     /**
      * (EXPERIMENTAL)
@@ -61,19 +61,19 @@ declare module 'node-pty' {
      * If flow control is enabled the `flowControlPause` and `flowControlResume` messages are not forwarded to
      * the underlying pseudoterminal.
      */
-    handleFlowControl?: boolean;
+    handleFlowControl?: boolean
 
     /**
      * (EXPERIMENTAL)
      * The string that should pause the pty when `handleFlowControl` is true. Default is XOFF ('\x13').
      */
-    flowControlPause?: string;
+    flowControlPause?: string
 
     /**
      * (EXPERIMENTAL)
      * The string that should resume the pty when `handleFlowControl` is true. Default is XON ('\x11').
      */
-    flowControlResume?: string;
+    flowControlResume?: string
   }
 
   export interface IPtyForkOptions extends IBasePtyForkOptions {
@@ -81,8 +81,8 @@ declare module 'node-pty' {
      * Security warning: use this option with great caution,
      * as opened file descriptors with higher privileges might leak to the child program.
      */
-    uid?: number;
-    gid?: number;
+    uid?: number
+    gid?: number
   }
 
   export interface IWindowsPtyForkOptions extends IBasePtyForkOptions {
@@ -93,7 +93,7 @@ declare module 'node-pty' {
      *
      * This setting does nothing on non-Windows.
      */
-    useConpty?: boolean;
+    useConpty?: boolean
 
     /**
      * (EXPERIMENTAL)
@@ -101,13 +101,13 @@ declare module 'node-pty' {
      * Whether to use the conpty.dll shipped with the node-pty package instead of the one built into
      * Windows. Defaults to false.
      */
-    useConptyDll?: boolean;
+    useConptyDll?: boolean
 
     /**
      * Whether to use PSEUDOCONSOLE_INHERIT_CURSOR in conpty.
      * @see https://docs.microsoft.com/en-us/windows/console/createpseudoconsole
      */
-    conptyInheritCursor?: boolean;
+    conptyInheritCursor?: boolean
   }
 
   /**
@@ -117,49 +117,49 @@ declare module 'node-pty' {
     /**
      * The process ID of the outer process.
      */
-    readonly pid: number;
+    readonly pid: number
 
     /**
      * The column size in characters.
      */
-    readonly cols: number;
+    readonly cols: number
 
     /**
      * The row size in characters.
      */
-    readonly rows: number;
+    readonly rows: number
 
     /**
      * The title of the active process.
      */
-    readonly process: string;
+    readonly process: string
 
     /**
      * (EXPERIMENTAL)
      * Whether to handle flow control. Useful to disable/re-enable flow control during runtime.
      * Use this for binary data that is likely to contain the `flowControlPause` string by accident.
      */
-    handleFlowControl: boolean;
+    handleFlowControl: boolean
 
     /**
      * Adds an event listener for when a data event fires. This happens when data is returned from
      * the pty.
      * @returns an `IDisposable` to stop listening.
      */
-    readonly onData: IEvent<string>;
+    readonly onData: IEvent<string>
 
     /**
      * Adds an event listener for when an exit event fires. This happens when the pty exits.
      * @returns an `IDisposable` to stop listening.
      */
-    readonly onExit: IEvent<{ exitCode: number, signal?: number }>;
+    readonly onExit: IEvent<{ exitCode: number, signal?: number }>
 
     /**
      * Resizes the dimensions of the pty.
      * @param columns The number of columns to use.
      * @param rows The number of rows to use.
      */
-    resize(columns: number, rows: number): void;
+    resize (columns: number, rows: number): void
 
     /**
      * Clears the pty's internal representation of its buffer. This is a no-op
@@ -167,13 +167,13 @@ declare module 'node-pty' {
      * frontend in order to synchronize state with the backend to avoid ConPTY
      * possibly reprinting the screen.
      */
-    clear(): void;
+    clear (): void
 
     /**
      * Writes data to the pty.
      * @param data The data to write.
      */
-    write(data: string): void;
+    write (data: string): void
 
     /**
      * Kills the pty.
@@ -181,24 +181,24 @@ declare module 'node-pty' {
      * Windows.
      * @throws Will throw when signal is used on Windows.
      */
-    kill(signal?: string): void;
+    kill (signal?: string): void
 
     /**
      * Pauses the pty for customizable flow control.
      */
-    pause(): void;
+    pause (): void
 
     /**
      * Resumes the pty for customizable flow control.
      */
-    resume(): void;
+    resume (): void
   }
 
   /**
    * An object that can be disposed via a dispose function.
    */
   export interface IDisposable {
-    dispose(): void;
+    dispose (): void
   }
 
   /**
@@ -206,6 +206,6 @@ declare module 'node-pty' {
    * @returns an `IDisposable` to stop listening.
    */
   export interface IEvent<T> {
-    (listener: (e: T) => any): IDisposable;
+    (listener: (e: T) => any): IDisposable
   }
 }
